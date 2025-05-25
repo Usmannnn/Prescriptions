@@ -1,15 +1,28 @@
 {
   "name": "p1",
   "version": "1.0.0",
-  "main": "index.tsx",
+  "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
     "web": "expo start --web",
+    "web:build": "expo export:web",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "electron": "concurrently -k \"expo start --web\" \"wait-on http://localhost:19006 && electron electron/main.js\"",
+    "electron:build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.example.p1",
+    "files": [
+      "electron/**/*",
+      "web-build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "dependencies": {
-    "@expo/metro-runtime": "~5.0.4",
+    "@expo/metro-runtime": "^5.0.4",
     "@react-navigation/bottom-tabs": "^7.1.1",
     "@react-navigation/elements": "^2.2.3",
     "@react-navigation/native": "^7.0.12",
@@ -30,6 +43,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@expo/webpack-config": "^19.0.1",
+    "concurrently": "^9.1.2",
+    "electron": "^36.3.1",
+    "electron-builder": "^26.0.12",
+    "wait-on": "^8.0.3",
     "@types/react": "~19.0.10",
     "typescript": "^5.7.2"
   },
